@@ -1,4 +1,4 @@
-# auto_sentiment
+# Sentiment Analyzer
 [Link to app](https://politicalsentimentanalysis.streamlit.app/)
 
 This app automates basic sentiment analysis. Current functionality includes:
