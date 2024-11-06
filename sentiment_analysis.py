@@ -140,7 +140,15 @@ def visualize_sentiment(sentiment_results):
 
 def detect_emotion(text):
     emotion_classifier = pipeline("text-classification", model="j-hartmann/emotion-english-distilroberta-base", return_all_scores=True)
-    emotions = emotion_classifier(text)
+    # Break text into smaller chunks if necessary
+    max_length = 512
+    chunks = [text[i:i+max_length] for i in range(0, len(text), max_length)]
+    
+    # Analyze emotions for each chunk and aggregate results
+    emotions = []
+    for chunk in chunks:
+        emotions.extend(emotion_classifier(chunk))
+    
     return emotions
 
 def plot_emotion_results(emotions):
