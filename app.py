@@ -32,7 +32,7 @@ def main():
     text_length = st.radio("Is this short-form (e.g., social media) or long-form text?", ("Short Form", "Long Form"))
     
     # Analysis options
-    analysis_option = st.selectbox("Choose Analysis Type:", ("Sentiment Analysis", "Emotion Detection"))
+    analysis_option = st.radio("Choose Analysis Type:", ("Sentiment Analysis", "Emotion Detection"))
     
     if st.button("Analyze"):
         try:
