@@ -43,7 +43,7 @@ def main():
             
             # Word Cloud
             st.subheader("Word Cloud Visualization")
-            wordcloud_fig = generate_wordcloud(text)
+            wordcloud_fig = generate_wordcloud(text, 'country_image.PNG')
             st.pyplot(wordcloud_fig)
             
             # Sentiment Highlighting

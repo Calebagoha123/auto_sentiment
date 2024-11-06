@@ -8,6 +8,8 @@ import re
 from nltk.tokenize import sent_tokenize, word_tokenize
 from nltk.corpus import stopwords
 from wordcloud import WordCloud
+from PIL import Image
+import numpy as np
 
 nltk.download('vader_lexicon')
 nltk.download('punkt')
@@ -44,7 +46,7 @@ def analyze_sentiment(text, analysis_type="Full Text", text_length="Long Form"):
             blob = TextBlob(text)
             return {"polarity": blob.sentiment.polarity, "subjectivity": blob.sentiment.subjectivity}
 
-def generate_wordcloud(text):
+def generate_wordcloud(text, mask_image_path):
     """
     Generates a word cloud visualization from the input text.
     """
@@ -55,8 +57,11 @@ def generate_wordcloud(text):
     stop_words = set(stopwords.words('english'))
     filtered_tokens = [word.lower() for word in tokens if word.isalnum() and word.lower() not in stop_words]
     
+    # Load the mask image
+    mask = np.array(Image.open(mask_image_path))
+    
     # Generate the word cloud
-    wordcloud = WordCloud(width=800, height=400, background_color='white').generate(' '.join(filtered_tokens))
+    wordcloud = WordCloud(width=800, height=400, background_color='white', mask=mask, contour_color='black', contour_width=1).generate(' '.join(filtered_tokens))
     
     # Create the plot
     fig, ax = plt.subplots(figsize=(10, 5))
