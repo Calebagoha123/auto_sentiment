@@ -6,4 +6,5 @@ This app automates basic sentiment analysis. Current functionality includes:
 - Sentiment visualizations for long/short form content (Average & per sentence)
 - Word Cloud
 - Sentiment highlighting
+- Emotion Detection
 
