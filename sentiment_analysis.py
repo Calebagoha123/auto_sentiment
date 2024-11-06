@@ -138,8 +138,22 @@ def visualize_sentiment(sentiment_results):
     
     return fig
 
-def detect_emotion(text):
+def detect_emotion(text, analysis_type):
     emotion_classifier = pipeline("text-classification", model="j-hartmann/emotion-english-distilroberta-base", return_all_scores=True)
+    
+    # Check if analysis should be done per sentence
+    if analysis_type == "Sentence":
+        # Split text into sentences
+        sentences = sent_tokenize(text)
+        
+        # Analyze emotions for each sentence
+        sentence_emotions = []
+        for sentence in sentences:
+            emotions = emotion_classifier(sentence[:512])  # Truncate if sentence is too long
+            sentence_emotions.append({"sentence": sentence, "emotions": emotions})
+        
+        return sentence_emotions
+    
     # Break text into smaller chunks if necessary
     max_length = 512
     chunks = [text[i:i+max_length] for i in range(0, len(text), max_length)]

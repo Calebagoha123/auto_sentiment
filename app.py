@@ -61,12 +61,17 @@ def main():
                     else:
                         st.write(sentence)
             elif analysis_option == "Emotion Detection":
-                emotion_results = detect_emotion(text)
+                emotion_results = detect_emotion(text, analysis_type)
                 st.write("Emotion Detection Results:")
                 
-                # Plotting emotions as a bar chart
-                fig = plot_emotion_results(emotion_results)
-                st.pyplot(fig)
+                if analysis_type == "Sentence":
+                    for item in emotion_results:
+                        st.write(f"Sentence: {item['sentence']}")
+                        fig = plot_emotion_results(item['emotions'])
+                        st.pyplot(fig)
+                else:
+                    fig = plot_emotion_results(emotion_results)
+                    st.pyplot(fig)
         except Exception as e:
             st.warning("Please enter some text or upload a PDF file.")
             st.error(f"Error: {e}")
