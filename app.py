@@ -72,5 +72,4 @@ def main():
             st.error(f"Error: {e}")
 
 if __name__ == "__main__":
-    !pip install transformers
     main()
