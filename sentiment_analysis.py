@@ -10,6 +10,8 @@ from nltk.corpus import stopwords
 from wordcloud import WordCloud
 from PIL import Image
 import numpy as np
+from transformers import pipeline
+
 
 nltk.download('vader_lexicon')
 nltk.download('punkt')
@@ -134,4 +136,23 @@ def visualize_sentiment(sentiment_results):
             ax.set_title("Full Text Sentiment Scores (TextBlob)")
             ax.set_ylabel("Score")
     
+    return fig
+
+def detect_emotion(text):
+    emotion_classifier = pipeline("text-classification", model="j-hartmann/emotion-english-distilroberta-base", return_all_scores=True)
+    emotions = emotion_classifier(text)
+    return emotions
+
+def plot_emotion_results(emotions):
+    # Extract labels and scores
+    labels = [result['label'] for result in emotions[0]]
+    scores = [result['score'] for result in emotions[0]]
+
+    # Create the bar chart
+    fig, ax = plt.subplots()
+    ax.bar(labels, scores, color='skyblue')
+    ax.set_ylabel('Score')
+    ax.set_title('Emotion Analysis Results')
+    ax.set_ylim(0, 1)  # Emotion scores are usually between 0 and 1
+    plt.xticks(rotation=45)
     return fig
